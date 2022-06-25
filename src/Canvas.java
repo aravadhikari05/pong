@@ -50,7 +50,7 @@ public class Canvas extends JPanel {
             g2d.drawString("Game Over", WINDOW_WIDTH/2 - g.getFontMetrics().stringWidth("Game Over")/2, 200);
             g2d.setFont(new Font("Courier", Font.PLAIN, 24));
 
-            g2d.drawString("Press Any Button to Start Over", 90, 250);
+            g2d.drawString("Press Any Key to Start Over", 110, 250);
         } else {
             //paddle
             g2d.fillRect(game.getP1X(), game.getP1Y(), Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
