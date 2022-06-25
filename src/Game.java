@@ -26,7 +26,6 @@ public class Game {
         p1Score = 0;
         p2Score = 0;
     }
-
     public void process() {
         updatePaddle();
         updateBall();
