@@ -6,32 +6,53 @@ public class Game {
 
     public static final int PADDLE_HEIGHT = 50;
     public static final int PADDLE_WIDTH = 5;
-    public static final int BALL_RADIUS = 5;
-
     private static final int PADDLE_SPEED = 10;
+    public static final int BALL_RADIUS = 5;
 
     private final int p1X = 50;
     private final int p2X = Canvas.WINDOW_WIDTH - 50;
 
     private int p1Y, p2Y, ballX, ballY, ballXSpeed, ballYSpeed, ballXDir, ballYDir, p1Score, p2Score;
+    private boolean gameOver;
 
     private ArrayList<Integer> activeKeys;
 
     public Game() {
+        activeKeys = new ArrayList<>();
+        gameOver = false;
         p1Y = Canvas.WINDOW_HEIGHT/2 - PADDLE_HEIGHT / 2;
         p2Y = Canvas.WINDOW_HEIGHT/2 - PADDLE_HEIGHT / 2;
-        reset();
-        activeKeys = new ArrayList<>();
-        ballXSpeed = 5;
         p1Score = 0;
         p2Score = 0;
+        reset();
     }
+
+    private void startGame() {
+        if(activeKeys.size() > 0 && gameOver) {
+            reset();
+            p1Score = 0;
+            p2Score = 0;
+            gameOver = false;
+        }
+    }
+    private void reset() {
+        ballX = Canvas.WINDOW_WIDTH/2 - BALL_RADIUS;
+        ballY = Canvas.WINDOW_HEIGHT/2 - BALL_RADIUS;
+        ballXDir = 1;
+        ballYDir = 1;
+        ballXSpeed = 5;
+        ballYSpeed = 5;
+    }
+
     public void process() {
+        startGame();
         updatePaddle();
         updateBall();
         checkBounds();
         bounceBall();
+        checkScore();
     }
+
     private void checkBounds() {
         if (p1Y < 0) {
             p1Y = 0;
@@ -46,8 +67,7 @@ public class Game {
         if(ballX > Canvas.WINDOW_WIDTH) {
             p1Score++;
             reset();
-        }
-        if (ballX < 0) {
+        } else if (ballX < 0) {
             p2Score++;
             reset();
         }
@@ -71,16 +91,9 @@ public class Game {
 
     }
 
-    private void reset() {
-        ballX = Canvas.WINDOW_WIDTH/2 - BALL_RADIUS;
-        ballY = Canvas.WINDOW_HEIGHT/2 - BALL_RADIUS;
-        ballXDir = 1;
-        ballYDir = 1;
-    }
-
     private void updateBall() {
         ballX += ballXDir * ballXSpeed;
-        ballY += 10 * ballYDir;
+        ballY += ballYSpeed * ballYDir;
     }
 
     private void updatePaddle() {
@@ -99,6 +112,14 @@ public class Game {
                     p1Y += PADDLE_SPEED;
                     break;
             }
+        }
+    }
+
+    private void checkScore() {
+        if (p1Score == 7 || p2Score == 7) {
+            gameOver = true;
+            ballXSpeed = 0;
+            ballYSpeed = 0;
         }
     }
 
@@ -150,5 +171,9 @@ public class Game {
 
     public int getP2Score() {
         return p2Score;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 }
