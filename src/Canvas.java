@@ -6,7 +6,7 @@ import java.util.TimerTask;
 public class Canvas extends JPanel {
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 400;
-    public static final int INTERVAL = 100;
+    public static final int INTERVAL = 50;
 
     private Game game;
     private java.util.Timer timer;
@@ -44,8 +44,10 @@ public class Canvas extends JPanel {
 
 
         g2d.setColor(Color.WHITE);
+        //paddle
         g2d.fillRect(game.getP1X(), game.getP1Y(), Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
         g2d.fillRect(game.getP2X(), game.getP2Y(), Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
+        //ball
         g2d.fillRect(game.getBallX(), game.getBallY(), Game.BALL_RADIUS * 2, Game.BALL_RADIUS * 2);
 
     }
