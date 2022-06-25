@@ -6,7 +6,7 @@ import java.util.TimerTask;
 public class Canvas extends JPanel {
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 400;
-    public static final int INTERVAL = 50;
+    public static final int INTERVAL = 30;
 
     private Game game;
     private java.util.Timer timer;
@@ -49,6 +49,15 @@ public class Canvas extends JPanel {
         g2d.fillRect(game.getP2X(), game.getP2Y(), Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
         //ball
         g2d.fillRect(game.getBallX(), game.getBallY(), Game.BALL_RADIUS * 2, Game.BALL_RADIUS * 2);
+        //dashed lines
+        for(int i = 0; i < WINDOW_HEIGHT / 20; i++) {
+            g2d.fillRect(WINDOW_WIDTH/2-2,i * (20)+2, 4, 15);
+        }
+        //score
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setFont(new Font("Courier", Font.PLAIN, 36));
+        g2d.drawString(""+game.getP1Score(), WINDOW_WIDTH/4 - g.getFontMetrics().stringWidth(""+game.getP1Score())/2, 50);
+        g2d.drawString(""+game.getP2Score(), WINDOW_WIDTH/4*3 - g.getFontMetrics().stringWidth(""+game.getP2Score())/2, 50);
 
     }
 }
